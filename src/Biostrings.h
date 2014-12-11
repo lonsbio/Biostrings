@@ -847,11 +847,14 @@ SEXP XStringViews_match_PWM(
 SEXP debug_find_palindromes();
 
 SEXP find_palindromes(
-	SEXP s_xp,
-	SEXP s_offset,
-	SEXP s_length,
+	SEXP x,
 	SEXP min_armlength,
 	SEXP max_looplength,
+	SEXP L2R_lkup
+);
+
+SEXP palindrome_arm_length(
+	SEXP x,
 	SEXP L2R_lkup
 );
 
