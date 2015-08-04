@@ -9,9 +9,17 @@
 {
     if (!is(axset, "AlignedXStringSet0") || length(axset) != 1L)
         stop("'axset' must be an AlignedXStringSet0 object of length 1")
-    if (any(pos < start(axset@range)) || any(pos > end(axset@range)))
-        stop("'pos' must be >= 'start(axset@range)' and <= 'end(axset@range)'")
-    lkup <- integer(width(axset@range))
+    ## .postaligned_gap_ranges() below sometimes needs to call
+    ## .pre2postaligned() with a 'pos' that is 'end(axset@range) + 1L'.
+    ## This happens when there is a gap at the end of the alignment like in
+    ##   x <- DNAString("TCAACTTAACTT")
+    ##   y <- DNAString("GGGCAACAACGGG")
+    ##   pa <- pairwiseAlignment(x, y, type="global-local",
+    ##                           gapOpening=-2, gapExtension=-1)
+    ##   writePairwiseAlignments(pa)
+    stopifnot(all(pos >= start(axset@range)),
+              all(pos <= end(axset@range) + 1L))
+    lkup <- integer(width(axset@range) + 1L)
     gap_ranges <- indel(axset)[[1L]]
     lkup[start(gap_ranges)] <- width(gap_ranges)
     lkup <- cumsum(lkup + 1L)
