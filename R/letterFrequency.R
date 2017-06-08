@@ -567,7 +567,7 @@ setMethod("oligonucleotideFrequency", "XString",
         as.array <- .normargAsArray(as.array)
         fast.moving.side <- .normargFastMovingSide(fast.moving.side, as.array)
         with.labels <- .normargWithLabels(with.labels)
-        base_codes <- xscodes(x, baseOnly=TRUE)
+        base_codes <- xscodes(x, baseOnly=FALSE)
         .Call2("XString_oligo_frequency",
                x, width, step,
                as.prob, as.array,
@@ -593,7 +593,7 @@ setMethod("oligonucleotideFrequency", "XStringSet",
         fast.moving.side <- .normargFastMovingSide(fast.moving.side, as.array)
         with.labels <- .normargWithLabels(with.labels)
         simplify.as <- .normargSimplifyAs(simplify.as, as.array)
-        base_codes <- xscodes(x, baseOnly=TRUE)
+        base_codes <- xscodes(x, baseOnly=FALSE)
         .Call2("XStringSet_oligo_frequency",
                x, width, step,
                as.prob, as.array,
